@@ -78,7 +78,11 @@ export default function Product() {
     navigate("/edit-product/" + id);
   };
 
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
+  //  "penanda string kosong agar data tidak dianggap sudah ada"
+  const searchFilter = products.filter((product) => {
+    return product?.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+  });
 
   return (
     <div>
@@ -125,61 +129,58 @@ export default function Product() {
                       <td>Action</td>
                     </tr>
                   </thead>
-
+                  {/* .filter((item) => 
+                  item.name.toLowerCase().includes(search) //  */}
                   <tbody>
-                    {products
-                      .filter((item) =>
-                        item.name.toLowerCase().includes(search)
-                      )
-                      .map((item, index) => (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>{item.name}</td>
-                          <td>
-                            {" "}
-                            <img
-                              src={item.image}
-                              style={{
-                                width: "80px",
-                                height: "80px",
-                                objectFit: "cover",
+                    {searchFilter.map((item, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{item.name}</td>
+                        <td>
+                          {" "}
+                          <img
+                            src={item.image}
+                            style={{
+                              width: "80px",
+                              height: "80px",
+                              objectFit: "cover",
+                            }}
+                            alt="preview"
+                          />
+                        </td>
+                        <td>{item.price}</td>
+                        <td>{item.qty}</td>
+                        {/* {cats.map((item, index) => ( */}
+                        <td>{item.cat?.name}</td>
+                        {/* ))} */}
+                        {/* {vendors.map((item, index) => ( */}
+                        <td>{item.vendor?.name}</td>
+                        {/* ))} */}
+                        <td>
+                          <div className="d-grid gap-5 d-md-block ml-3">
+                            <Button
+                              onClick={() => {
+                                handleEdit(item.id);
                               }}
-                              alt="preview"
-                            />
-                          </td>
-                          <td>{item.price}</td>
-                          <td>{item.qty}</td>
-                          {/* {cats.map((item, index) => ( */}
-                          <td>{item.cat.name}</td>
-                          {/* ))} */}
-                          {/* {vendors.map((item, index) => ( */}
-                          <td>{item.vendor.name}</td>
-                          {/* ))} */}
-                          <td>
-                            <div className="d-grid gap-5 d-md-block ml-3">
-                              <Button
-                                onClick={() => {
-                                  handleEdit(item.id);
-                                }}
-                                className="btn-succes bg-succes px-2 "
-                                variant="outline-success"
-                              >
-                                Edit
-                              </Button>
+                              className="btn-succes bg-succes px-2 "
+                              variant="outline-success"
+                            >
+                              Edit
+                            </Button>
 
-                              <Button
-                                onClick={() => {
-                                  handleDelete(item.id);
-                                }}
-                                className="btn-red bg-red px-2 "
-                                variant="outline-danger"
-                              >
-                                Delete
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
+                            <Button
+                              onClick={() => {
+                                handleDelete(item.id);
+                              }}
+                              className="btn-red bg-red px-2 "
+                              variant="outline-danger"
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </Table>
               ) : (

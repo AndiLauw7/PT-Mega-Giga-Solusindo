@@ -82,13 +82,13 @@ exports.getProducts = async (req, res) => {
             exclude: ["createdAt", "updatedAt"],
           },
         },
-        {
-          model: vendor,
-          as: "vendor",
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
+        // {
+        //   model: vendor,
+        //   as: "vendor",
+        //   attributes: {
+        //     exclude: ["createdAt", "updatedAt"],
+        //   },
+        // },
       ],
       attributes: {
         exclude: ["createdAt", "updatedAt", "iduser"],
